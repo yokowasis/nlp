@@ -11,7 +11,7 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your application files (optional)
-# COPY . /app
+COPY . /app
 
 # Command to run your application (update this according to your app)
 CMD ["python", "backend.py"]
