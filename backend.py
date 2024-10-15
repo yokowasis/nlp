@@ -75,5 +75,5 @@ if debugenv == "True":
     app.run(host="localhost", debug=True,
             port=int(os.getenv('PORT') or "3012"))
 else:
-    app.run(host="localhost", debug=False,
-            port=int(os.getenv('PORT') or "3012"))
+    from waitress import serve
+    serve(app, host="localhost", port=int(os.getenv('PORT') or "8080"))

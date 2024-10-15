@@ -4,3 +4,4 @@ torch
 sentence_transformers
 openai
 python-dotenv
+waitress
