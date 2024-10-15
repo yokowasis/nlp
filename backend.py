@@ -72,6 +72,8 @@ def get_index():
 
 debugenv = os.getenv('DEBUG')
 if debugenv == "True":
-    app.run(debug=True, port=int(os.getenv('PORT') or "3012"))
+    app.run(host="localhost", debug=True,
+            port=int(os.getenv('PORT') or "3012"))
 else:
-    app.run(debug=False, port=int(os.getenv('PORT') or "3012"))
+    app.run(host="localhost", debug=False,
+            port=int(os.getenv('PORT') or "3012"))
