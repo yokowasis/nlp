@@ -3,6 +3,8 @@ version: '3.8'
 services:
   nlp_app:
     build: .
+    ports:
+      - "${PORT}:${PORT}"
 
 volumes:
   model_data:
