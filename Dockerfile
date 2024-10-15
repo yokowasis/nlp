@@ -13,5 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of your application files (optional)
 COPY . /app
 
-# Command to run your application (update this according to your app)
-CMD ["python", "backend.py"]
+# Command to run your application using Waitress
+CMD ["waitress-serve", "--host", "localhost", "--port","8080", "backend:app"]
