@@ -4,6 +4,8 @@ FROM python:3.10.14-slim
 # Set the working directory in the container
 WORKDIR /app
 
+EXPOSE 8080
+
 # Copy the requirements file into the container at /app
 COPY requirements.txt /app/
 
