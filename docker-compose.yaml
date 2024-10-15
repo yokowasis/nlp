@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  nlp_app:
+    build: .
+
+volumes:
+  model_data:
+    driver: local
