@@ -3,3 +3,5 @@ version: '3.8'
 services:
   nlp_app:
     build: .
+    ports:
+      - "8223:8080"
