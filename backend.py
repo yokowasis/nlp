@@ -82,13 +82,14 @@ def get_data():
 @app.route("/api/semantic-search", methods=['POST'])
 def api_semantic_search():
     inputs = request.get_json()
-    embedding = inputs['embedding']
+    text = inputs['text']
+    embedding = encode(text)
     table = inputs['table']
     select_column = inputs['select_column']
     target_column = inputs['target_column']
     limit = inputs['limit']
 
-    sql = f"SELECT {select_column} FROM {table} ORDER BY {target_column} <#> {embedding} LIMIT {limit}"
+    sql = f"SELECT {select_column} FROM {table} ORDER BY {target_column} <#> '{embedding}' LIMIT {limit}"
 
     rows = query(sql)
 
@@ -117,7 +118,7 @@ def get_index():
 
     POST /api/semantic-search
     {
-        "embedding": "hello world",
+        "text": "hello world",
         "table" : "comments",
         "select_column" : "id,text",
         "target_column" : "text_vector",
