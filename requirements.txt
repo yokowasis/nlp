@@ -5,3 +5,4 @@ sentence_transformers
 openai
 python-dotenv
 waitress
+psycopg2
