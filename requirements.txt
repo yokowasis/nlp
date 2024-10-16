@@ -5,5 +5,5 @@ sentence_transformers
 openai
 python-dotenv
 waitress
-psycopg2
 psycopg2-binary
+psycopg2

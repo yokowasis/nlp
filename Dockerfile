@@ -3,7 +3,7 @@ FROM python:3.10.14-slim
 
 # Install PostgreSQL development package
 RUN apt-get update && \
-    apt-get install -y libpq-dev && \
+    apt-get install -y libpq-dev build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
