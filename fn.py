@@ -11,11 +11,12 @@ openaimodel = os.getenv('OPENAI_MODEL') or "gpt-4o-mini"
 client = OpenAI(api_key=os.getenv('OPENAI_KEY'))
 
 
-def translate(s: str):
+def translate(s: str, lang: str):
     completion = client.chat.completions.create(
         model=openaimodel,
         messages=[
-            {"role": "system", "content": "you are a translator that translate to english"},
+            {"role": "system",
+                "content": "you are a translator that translate input to " + lang},
             {"role": "user", "content": s}
         ]
     )

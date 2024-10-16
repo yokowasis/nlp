@@ -70,7 +70,8 @@ def api_summarize():
 @app.route("/api/translate", methods=['POST'])
 def api_translate():
     inputs = request.get_json()
-    translation = translate(inputs['text'])
+    lang = inputs['lang']
+    translation = translate(inputs['text'], lang=lang)
     return jsonify(translation)
 
 
@@ -113,7 +114,8 @@ def get_index():
 
     POST /api/translate
     {
-        "text": "Halo Dunia"
+        "text": "Halo Dunia",
+        "lang" : "english"
     }
 
     POST /api/semantic-search
