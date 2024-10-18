@@ -1,5 +1,9 @@
 FROM python:3.10
 
+RUN apt-get update && \
+    apt-get install -y libpq-dev build-essential postgresql-client && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /code
 
 COPY ./requirements-fastapi.txt /code/requirements.txt

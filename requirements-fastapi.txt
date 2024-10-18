@@ -2,7 +2,6 @@ torch
 sentence_transformers
 openai
 python-dotenv
-psycopg2-binary
 psycopg2
 fastapi[standard]
 pydantic
