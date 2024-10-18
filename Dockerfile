@@ -1,24 +1,11 @@
-# Use the official Python 3.10.14 image from the Docker Hub
-FROM python:3.10.14-slim
+FROM python:3.10
 
-# Install PostgreSQL development package
-RUN apt-get update && \
-    apt-get install -y libpq-dev build-essential && \
-    rm -rf /var/lib/apt/lists/*
+WORKDIR /code
 
-# Set the working directory in the container
-WORKDIR /app
+COPY ./requirements-fastapi.txt /code/requirements.txt
 
-EXPOSE 3000
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-# Copy the requirements file into the container at /app
-COPY requirements.txt /app/
+COPY . /code/app
 
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of your application files (optional)
-COPY . /app
-
-# Command to run your application using Waitress
-CMD ["python", "serve-flask.py"]
+CMD ["fastapi", "run", "app/main.py", "--port", "3333", "--proxy-headers", "--workers", "4"]
