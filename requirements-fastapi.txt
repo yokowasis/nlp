@@ -4,5 +4,5 @@ openai
 python-dotenv
 psycopg2-binary
 psycopg2
-fastapi
+fastapi[standard]
 pydantic
