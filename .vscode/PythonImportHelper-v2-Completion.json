@@ -212,16 +212,7 @@
         "kind": 5,
         "importPath": "backend",
         "description": "backend",
-        "peekOfCode": "conn_params = {\n    'dbname': os.getenv('DB_NAME'),\n    'user': os.getenv('DB_USER'),\n    'password': os.getenv('DB_PASSWORD'),\n    'host': os.getenv('DB_HOST'),\n    'port': os.getenv('DB_PORT') or 5422\n}\n# Connect to the PostgreSQL server\nconn = psycopg2.connect(**conn_params)\nif conn is not None:",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "conn",
-        "kind": 5,
-        "importPath": "backend",
-        "description": "backend",
-        "peekOfCode": "conn = psycopg2.connect(**conn_params)\nif conn is not None:\n    print(\"Connection to PostgreSQL server established successfully.\")\n    cursor = conn.cursor()\n    def query(sql):\n        try:\n            # Execute a query\n            cursor.execute(sql)\n            records = cursor.fetchall()\n            return records",
+        "peekOfCode": "conn_params = {\n    'dbname': os.getenv('DB_NAME'),\n    'user': os.getenv('DB_USER'),\n    'password': os.getenv('DB_PASSWORD'),\n    'host': os.getenv('DB_HOST'),\n    'port': os.getenv('DB_PORT') or 5422\n}\ntry:\n    # Trycatch Connect to the PostgreSQL server\n    conn = psycopg2.connect(**conn_params)",
         "detail": "backend",
         "documentation": {}
     },

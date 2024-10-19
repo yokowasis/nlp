@@ -33,10 +33,9 @@ conn_params = {
     'port': os.getenv('DB_PORT') or 5422
 }
 
-# Connect to the PostgreSQL server
-conn = psycopg2.connect(**conn_params)
-
-if conn is not None:
+try:
+    # Trycatch Connect to the PostgreSQL server
+    conn = psycopg2.connect(**conn_params)
     print("Connection to PostgreSQL server established successfully.")
     cursor = conn.cursor()
 
@@ -71,6 +70,9 @@ if conn is not None:
         rows = query(sql)
 
         return JSONResponse(content=rows)
+
+except Exception as e:
+    print(f"Error connecting to PostgreSQL server: {e}")
 
 
 # Sample data
