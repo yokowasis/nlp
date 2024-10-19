@@ -25,15 +25,15 @@ app.add_middleware(
 
 
 # Connection parameters
-conn_params = {
-    'dbname': os.getenv('DB_NAME'),
-    'user': os.getenv('DB_USER'),
-    'password': os.getenv('DB_PASSWORD'),
-    'host': os.getenv('DB_HOST'),
-    'port': os.getenv('DB_PORT') or 5422
-}
+if (not os.getenv('DB_NAME')):
+    conn_params = {
+        'dbname': os.getenv('DB_NAME'),
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
+        'host': os.getenv('DB_HOST'),
+        'port': os.getenv('DB_PORT') or 5422
+    }
 
-try:
     # Trycatch Connect to the PostgreSQL server
     conn = psycopg2.connect(**conn_params)
     print("Connection to PostgreSQL server established successfully.")
@@ -70,10 +70,6 @@ try:
         rows = query(sql)
 
         return JSONResponse(content=rows)
-
-except Exception as e:
-    print(f"Error connecting to PostgreSQL server: {e}")
-
 
 # Sample data
 data = {
