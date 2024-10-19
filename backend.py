@@ -25,7 +25,7 @@ app.add_middleware(
 
 
 # Connection parameters
-if (not os.getenv('DB_NAME')):
+if (os.getenv('DB_NAME')):
     conn_params = {
         'dbname': os.getenv('DB_NAME'),
         'user': os.getenv('DB_USER'),
