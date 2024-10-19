@@ -11,30 +11,6 @@ import json
 
 load_dotenv()
 
-# Connection parameters
-conn_params = {
-    'dbname': os.getenv('DB_NAME'),
-    'user': os.getenv('DB_USER'),
-    'password': os.getenv('DB_PASSWORD'),
-    'host': os.getenv('DB_HOST'),
-    'port': os.getenv('DB_PORT') or 5422
-}
-
-# Connect to the PostgreSQL server
-conn = psycopg2.connect(**conn_params)
-cursor = conn.cursor()
-
-
-def query(sql):
-    try:
-        # Execute a query
-        cursor.execute(sql)
-        records = cursor.fetchall()
-        return records
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        raise HTTPException(status_code=500, detail="Database query error")
-
 
 app = FastAPI()
 
@@ -46,6 +22,56 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# Connection parameters
+conn_params = {
+    'dbname': os.getenv('DB_NAME'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'port': os.getenv('DB_PORT') or 5422
+}
+
+# Connect to the PostgreSQL server
+conn = psycopg2.connect(**conn_params)
+
+if conn is not None:
+    print("Connection to PostgreSQL server established successfully.")
+    cursor = conn.cursor()
+
+    def query(sql):
+        try:
+            # Execute a query
+            cursor.execute(sql)
+            records = cursor.fetchall()
+            return records
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            raise HTTPException(status_code=500, detail="Database query error")
+
+    class SemanticBody(BaseModel):
+        text: str
+        table: str
+        retrieved_columns: str
+        target_column: str
+        limit: int
+
+    @app.post("/api/semantic-search", name="Semantic Search", description="This endpoint takes a text as input and returns a list of rows from a table that match the text. The retrieved columns are the columns that you want to retrieve from the table separated by comma. The target column is the column in the database that has the type of `vector`.")
+    async def api_semantic_search(inputs: SemanticBody):
+        text = inputs.text
+        embedding = encode(text)
+        table = inputs.table
+        select_column = inputs.retrieved_columns
+        target_column = inputs.target_column
+        limit = inputs.limit
+
+        sql = f"SELECT {select_column} FROM {table} ORDER BY {target_column} <#> '{embedding}' LIMIT {limit}"
+
+        rows = query(sql)
+
+        return JSONResponse(content=rows)
+
 
 # Sample data
 data = {
@@ -91,30 +117,6 @@ async def api_translate(inputs: TranslateBody):
     lang = inputs.target_language
     translation = translate(inputs.text, lang=lang)
     return JSONResponse(content=translation)
-
-
-class SemanticBody(BaseModel):
-    text: str
-    table: str
-    retrieved_columns: str
-    target_column: str
-    limit: int
-
-
-@app.post("/api/semantic-search", name="Semantic Search", description="This endpoint takes a text as input and returns a list of rows from a table that match the text. The retrieved columns are the columns that you want to retrieve from the table separated by comma. The target column is the column in the database that has the type of `vector`.")
-async def api_semantic_search(inputs: SemanticBody):
-    text = inputs.text
-    embedding = encode(text)
-    table = inputs.table
-    select_column = inputs.retrieved_columns
-    target_column = inputs.target_column
-    limit = inputs.limit
-
-    sql = f"SELECT {select_column} FROM {table} ORDER BY {target_column} <#> '{embedding}' LIMIT {limit}"
-
-    rows = query(sql)
-
-    return JSONResponse(content=rows)
 
 
 @app.get("/")

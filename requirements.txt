@@ -1,9 +1,7 @@
-flask
-flask_cors
 torch
 sentence_transformers
 openai
 python-dotenv
-waitress
-psycopg2-binary
 psycopg2
+fastapi[standard]
+pydantic

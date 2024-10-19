@@ -24,14 +24,6 @@
         "documentation": {}
     },
     {
-        "label": "FastAPI",
-        "importPath": "fastapi",
-        "description": "fastapi",
-        "isExtraImport": true,
-        "detail": "fastapi",
-        "documentation": {}
-    },
-    {
         "label": "CORSMiddleware",
         "importPath": "fastapi.middleware.cors",
         "description": "fastapi.middleware.cors",
@@ -112,22 +104,6 @@
         "documentation": {}
     },
     {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
         "label": "List",
         "importPath": "typing",
         "description": "typing",
@@ -137,14 +113,6 @@
     },
     {
         "label": "Annotated",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Union",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -204,23 +172,6 @@
         "documentation": {}
     },
     {
-        "label": "backend",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "backend",
-        "description": "backend",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "serve",
-        "importPath": "waitress",
-        "description": "waitress",
-        "isExtraImport": true,
-        "detail": "waitress",
-        "documentation": {}
-    },
-    {
         "label": "VectorizeBody",
         "kind": 6,
         "importPath": "backend",
@@ -243,52 +194,7 @@
         "kind": 6,
         "importPath": "backend",
         "description": "backend",
-        "peekOfCode": "class TranslateBody(BaseModel):\n    text: str\n    target_language: str\n@app.post(\"/api/translate\", name=\"Translate Text\", description=\"This endpoint takes a text as input and returns a translated text in the specified language.\")\nasync def api_translate(inputs: TranslateBody):\n    lang = inputs.target_language\n    translation = translate(inputs.text, lang=lang)\n    return JSONResponse(content=translation)\nclass SemanticBody(BaseModel):\n    text: str",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "SemanticBody",
-        "kind": 6,
-        "importPath": "backend",
-        "description": "backend",
-        "peekOfCode": "class SemanticBody(BaseModel):\n    text: str\n    table: str\n    retrieved_columns: str\n    target_column: str\n    limit: int\n@app.post(\"/api/semantic-search\", name=\"Semantic Search\", description=\"This endpoint takes a text as input and returns a list of rows from a table that match the text. The retrieved columns are the columns that you want to retrieve from the table separated by comma. The target column is the column in the database that has the type of `vector`.\")\nasync def api_semantic_search(inputs: SemanticBody):\n    text = inputs.text\n    embedding = encode(text)",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "query",
-        "kind": 2,
-        "importPath": "backend",
-        "description": "backend",
-        "peekOfCode": "def query(sql):\n    try:\n        # Execute a query\n        cursor.execute(sql)\n        records = cursor.fetchall()\n        return records\n    except Exception as e:\n        print(f\"An error occurred: {e}\")\n        raise HTTPException(status_code=500, detail=\"Database query error\")\napp = FastAPI()",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "conn_params",
-        "kind": 5,
-        "importPath": "backend",
-        "description": "backend",
-        "peekOfCode": "conn_params = {\n    'dbname': os.getenv('DB_NAME'),\n    'user': os.getenv('DB_USER'),\n    'password': os.getenv('DB_PASSWORD'),\n    'host': os.getenv('DB_HOST'),\n    'port': os.getenv('DB_PORT') or 5422\n}\n# Connect to the PostgreSQL server\nconn = psycopg2.connect(**conn_params)\ncursor = conn.cursor()",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "conn",
-        "kind": 5,
-        "importPath": "backend",
-        "description": "backend",
-        "peekOfCode": "conn = psycopg2.connect(**conn_params)\ncursor = conn.cursor()\ndef query(sql):\n    try:\n        # Execute a query\n        cursor.execute(sql)\n        records = cursor.fetchall()\n        return records\n    except Exception as e:\n        print(f\"An error occurred: {e}\")",
-        "detail": "backend",
-        "documentation": {}
-    },
-    {
-        "label": "cursor",
-        "kind": 5,
-        "importPath": "backend",
-        "description": "backend",
-        "peekOfCode": "cursor = conn.cursor()\ndef query(sql):\n    try:\n        # Execute a query\n        cursor.execute(sql)\n        records = cursor.fetchall()\n        return records\n    except Exception as e:\n        print(f\"An error occurred: {e}\")\n        raise HTTPException(status_code=500, detail=\"Database query error\")",
+        "peekOfCode": "class TranslateBody(BaseModel):\n    text: str\n    target_language: str\n@app.post(\"/api/translate\", name=\"Translate Text\", description=\"This endpoint takes a text as input and returns a translated text in the specified language.\")\nasync def api_translate(inputs: TranslateBody):\n    lang = inputs.target_language\n    translation = translate(inputs.text, lang=lang)\n    return JSONResponse(content=translation)\n@app.get(\"/\")\nasync def get_index():",
         "detail": "backend",
         "documentation": {}
     },
@@ -297,7 +203,25 @@
         "kind": 5,
         "importPath": "backend",
         "description": "backend",
-        "peekOfCode": "app = FastAPI()\n# CORS middleware\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Sample data",
+        "peekOfCode": "app = FastAPI()\n# CORS middleware\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Connection parameters",
+        "detail": "backend",
+        "documentation": {}
+    },
+    {
+        "label": "conn_params",
+        "kind": 5,
+        "importPath": "backend",
+        "description": "backend",
+        "peekOfCode": "conn_params = {\n    'dbname': os.getenv('DB_NAME'),\n    'user': os.getenv('DB_USER'),\n    'password': os.getenv('DB_PASSWORD'),\n    'host': os.getenv('DB_HOST'),\n    'port': os.getenv('DB_PORT') or 5422\n}\n# Connect to the PostgreSQL server\nconn = psycopg2.connect(**conn_params)\nif conn is not None:",
+        "detail": "backend",
+        "documentation": {}
+    },
+    {
+        "label": "conn",
+        "kind": 5,
+        "importPath": "backend",
+        "description": "backend",
+        "peekOfCode": "conn = psycopg2.connect(**conn_params)\nif conn is not None:\n    print(\"Connection to PostgreSQL server established successfully.\")\n    cursor = conn.cursor()\n    def query(sql):\n        try:\n            # Execute a query\n            cursor.execute(sql)\n            records = cursor.fetchall()\n            return records",
         "detail": "backend",
         "documentation": {}
     },
@@ -389,33 +313,6 @@
         "description": "fn",
         "peekOfCode": "client = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]\n    )",
         "detail": "fn",
-        "documentation": {}
-    },
-    {
-        "label": "read_root",
-        "kind": 2,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "def read_root():\n    return {\"Hello\": \"World\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: Union[str, None] = None):\n    return {\"item_id\": item_id, \"q\": q}",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "read_item",
-        "kind": 2,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "def read_item(item_id: int, q: Union[str, None] = None):\n    return {\"item_id\": item_id, \"q\": q}",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "app",
-        "kind": 5,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "app = FastAPI()\n@app.get(\"/\")\ndef read_root():\n    return {\"Hello\": \"World\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: Union[str, None] = None):\n    return {\"item_id\": item_id, \"q\": q}",
-        "detail": "main",
         "documentation": {}
     }
 ]

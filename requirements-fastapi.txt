@@ -1,7 +1,0 @@
-torch
-sentence_transformers
-openai
-python-dotenv
-psycopg2
-fastapi[standard]
-pydantic
